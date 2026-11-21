@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>โจทย์ฝึก Java ชุดที่ 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f5fa; --surface:#ffffff; --line:#d9deea; --text:#1d2438; --muted:#5d6788;
+  --code-bg:#eaeef7; --mid:#b26a00; --mid-soft:#fff1d6; --hard:#6a3fc8; --hard-soft:#ece4ff;
+  --easy:#12796f; --easy-soft:#dff4f0; --done:#1f8a5b; color-scheme:light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#171d2e; --surface:#212a41; --line:#33405f; --text:#e7eaf4; --muted:#a3adc9;
+    --code-bg:#161c2c; --mid:#f2b955; --mid-soft:#3a3322; --hard:#b99cff; --hard-soft:#2f2a4d;
+    --easy:#5fd0c4; --easy-soft:#1f3a3a; --done:#58d39b; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171d2e; --surface:#212a41; --line:#33405f; --text:#e7eaf4; --muted:#a3adc9;
+  --code-bg:#161c2c; --mid:#f2b955; --mid-soft:#3a3322; --hard:#b99cff; --hard-soft:#2f2a4d;
+  --easy:#5fd0c4; --easy-soft:#1f3a3a; --done:#58d39b; color-scheme:dark;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Sarabun","Noto Sans Thai",Tahoma,sans-serif;font-size:17px;line-height:1.65}
+.wrap{max-width:760px;margin:0 auto;padding:32px 20px 64px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:8px}
+h1{font-size:2.1rem;line-height:1.2;margin:0 0 6px;font-weight:800}
+.sub{margin:0;color:var(--muted)}
+#theme{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font:inherit;font-size:.9rem;cursor:pointer;flex:none}
+#theme:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--hard);outline-offset:2px}
+.progress{margin:22px 0 36px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+.bar{height:8px;border-radius:99px;background:var(--code-bg);overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;width:0;background:var(--done);transition:width .25s}
+.level{margin:0 0 44px}
+.level h2{font-size:1.45rem;margin:0 0 4px;padding-left:14px;border-left:6px solid var(--accent)}
+.level.easy{--accent:var(--easy);--soft:var(--easy-soft)}
+.level.mid{--accent:var(--mid);--soft:var(--mid-soft)}
+.level.hard{--accent:var(--hard);--soft:var(--hard-soft)}
+.level>p{margin:0 0 18px 20px;color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:16px 18px;margin-bottom:14px}
+.card.done{opacity:.72}
+.card.done h3{text-decoration:line-through;text-decoration-color:var(--done)}
+.top{display:flex;gap:12px;align-items:flex-start}
+.top input{width:22px;height:22px;margin-top:4px;accent-color:var(--done);flex:none;cursor:pointer}
+h3{font-size:1.1rem;margin:0}
+.desc{margin:6px 0 10px}
+pre{margin:8px 0;background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;overflow-x:auto;font:14.5px/1.55 Consolas,"Courier New",monospace;color:var(--text)}
+.ex{color:var(--muted);font-size:.92rem;margin:10px 0 0}
+details{margin-top:10px}
+summary{cursor:pointer;color:var(--accent);font-weight:600;width:max-content}
+details p{margin:8px 0 0;padding:8px 12px;background:var(--soft);border-radius:8px}
+footer{color:var(--muted);font-size:.92rem;border-top:1px solid var(--line);padding-top:18px}
+@media (max-width:520px){h1{font-size:1.7rem}.wrap{padding:24px 14px 48px}}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <h1>โจทย์ฝึก Java ชุดที่ 2</h1>
+    <p class="sub">สามระดับ ระดับละ 5 ข้อ ติ๊กช่องหน้าโจทย์เมื่อทำเสร็จ (บันทึกไว้ในเบราว์เซอร์ของคุณเท่านั้น)</p>
+  </div>
+  <button id="theme" type="button" aria-label="สลับโหมดสี">สลับโหมดสี</button>
+</header>
+
+<div class="progress">
+  <div id="ptext">ทำแล้ว 0 จาก 15 ข้อ</div>
+  <div class="bar" aria-hidden="true"><i id="pbar"></i></div>
+</div>
+
+<main id="root"></main>
+
+<footer>ทำเองให้จบก่อนค่อยกดดูคำใบ้ แล้วทดสอบด้วยค่าขอบ เช่น 0, ค่าติดลบ และข้อมูลที่ไม่ใช่ตัวเลข</footer>
+</div>
+
+<script>
+var LEVELS=[
+{cls:"easy",title:"ระดับ 1 พื้นฐาน",note:"ตัวแปร, Scanner, if/else, switch และ loop",items:[
+ {t:"พื้นที่และเส้นรอบวงของวงกลม",d:"รับรัศมีเป็นทศนิยม แล้วแสดงพื้นที่และเส้นรอบวง ใช้ค่า Math.PI และแสดงทศนิยม 2 ตำแหน่ง",io:"อินพุต: 5\nผลลัพธ์: Area = 78.54, Circumference = 31.42",h:"พื้นที่ = π × r × r และเส้นรอบวง = 2 × π × r ใช้ printf กับ %.2f"},
+ {t:"ชื่อเดือนด้วย switch",d:"รับเลขเดือน 1 ถึง 12 แล้วแสดงชื่อเดือนภาษาอังกฤษด้วย switch ถ้านอกช่วงให้แสดง Invalid month",io:"3 → March\n13 → Invalid month",h:"อย่าลืม break ท้ายแต่ละ case และใช้ default สำหรับกรณีนอกช่วง"},
+ {t:"ปีอธิกสุรทิน",d:"รับปี ค.ศ. แล้วบอกว่าเป็นปีอธิกสุรทิน (Leap year) หรือไม่",io:"2024 → Leap year\n1900 → Not leap year\n2000 → Leap year",h:"หาร 4 ลงตัวคือปีอธิกสุรทิน แต่ถ้าหาร 100 ลงตัวต้องหาร 400 ลงตัวด้วย"},
+ {t:"สามเหลี่ยมดาว",d:"รับจำนวนแถว n แล้วพิมพ์สามเหลี่ยมดาวที่แถวที่ i มีดาว i ตัว",io:"n = 3\n*\n**\n***",h:"ใช้ for ซ้อนกัน ลูปนอกนับแถว ลูปในพิมพ์ดาว อย่าลืมขึ้นบรรทัดใหม่หลังจบแต่ละแถว"},
+ {t:"ผลรวมของแต่ละหลัก",d:"รับจำนวนเต็มบวก แล้วหาผลรวมของทุกหลักในตัวเลขนั้น",io:"1234 → 10\n905 → 14",h:"ใช้ % 10 เพื่อเอาหลักสุดท้าย แล้วใช้ / 10 เพื่อตัดทิ้ง วนจนตัวเลขเป็น 0"}
+]},
+{cls:"mid",title:"ระดับ 2 กลาง",note:"Array, String, Recursion และ method",items:[
+ {t:"กลับลำดับ array",d:"รับตัวเลข 5 ตัวเก็บใน array แล้วกลับลำดับในตัว array เดิม โดยไม่สร้าง array ใหม่ แล้วพิมพ์ผลลัพธ์",io:"อินพุต: 1 2 3 4 5\nผลลัพธ์: 5 4 3 2 1",h:"สลับตำแหน่ง i กับ length - 1 - i และวนแค่ครึ่งเดียวของ array ถ้าวนครบจะสลับกลับไปเหมือนเดิม"},
+ {t:"นับคำและหาคำที่ยาวที่สุด",d:"รับประโยค แล้วแสดงจำนวนคำและคำที่ยาวที่สุด",io:"อินพุต: I love Java programming\nผลลัพธ์: Words = 4, Longest = programming",h:"ลองใช้ split(\" \") แยกประโยคเป็น array ของคำ แล้ววนเทียบ length()"},
+ {t:"ลำดับ Fibonacci ด้วย recursion",d:"เขียน method fib(int n) แบบเรียกตัวเอง แล้วพิมพ์ 10 ตัวแรกของลำดับ",io:"ผลลัพธ์: 0 1 1 2 3 5 8 13 21 34",h:"ต้องมีกรณีหยุด คือ fib(0) = 0 และ fib(1) = 1 ที่เหลือคือ fib(n-1) + fib(n-2)"},
+ {t:"Matrix 3x3",d:"รับตัวเลข 9 ตัวเก็บใน array 2 มิติขนาด 3x3 แล้วแสดงผลรวมแนวทแยงหลักและผลรวมของแต่ละแถว",io:"1 2 3 / 4 5 6 / 7 8 9\nผลลัพธ์: Diagonal = 15, Row sums = 6 15 24",h:"แนวทแยงหลักคือช่องที่ดัชนีแถวเท่ากับดัชนีหลัก arr[i][i]"},
+ {t:"Caesar Cipher",d:"เขียน method encrypt(String s, int shift) ที่เลื่อนตัวอักษร a ถึง z ไปข้างหน้า shift ตำแหน่ง และวนกลับเมื่อเกิน z",io:"abc, shift 3 → def\nxyz, shift 3 → abc",h:"คำนวณด้วย (ch - 'a' + shift) % 26 + 'a' แล้วแปลงกลับเป็น char"}
+]},
+{cls:"hard",title:"ระดับ 3 ท้าทาย",note:"OOP, Abstract class, Collections และ Comparable",items:[
+ {t:"ระบบยืมหนังสือ",d:"สร้างคลาส Book (title, available) และคลาส Library ที่เก็บ ArrayList<Book> มี method borrow(title) และ returnBook(title) ถ้ายืมเล่มที่ถูกยืมไปแล้วหรือหาไม่เจอ ให้แจ้งผู้ใช้",io:"borrow(Java) → Borrowed\nborrow(Java) อีกครั้ง → Already borrowed\nborrow(Python) ที่ไม่มี → Not found",h:"แยกให้ชัดว่าเจอหนังสือหรือไม่ก่อน แล้วค่อยเช็กสถานะว่าว่างอยู่หรือเปล่า"},
+ {t:"Abstract class Animal",d:"สร้าง abstract class Animal ที่มี name, abstract method sound() และ method intro() ที่เรียก sound() สร้างคลาสลูก Dog และ Cat แล้วเก็บใน array เดียวกันวนเรียก intro()",io:"Rex says Woof\nMimi says Meow",h:"abstract method ไม่มีเนื้อหา คลาสลูกต้อง override เสมอ และสร้าง object ของ Animal ตรง ๆ ไม่ได้"},
+ {t:"นับความถี่คำด้วย HashMap",d:"รับประโยค แล้วนับว่าแต่ละคำปรากฏกี่ครั้งโดยใช้ HashMap<String, Integer> แล้วพิมพ์ผลทั้งหมด",io:"อินพุต: a b a c a b\nผลลัพธ์: a=3 b=2 c=1",h:"ลองใช้ getOrDefault(word, 0) + 1 หรือ merge เพื่อไม่ต้องเช็กว่ามีคีย์อยู่แล้วหรือยัง"},
+ {t:"Stack และตรวจวงเล็บสมดุล",d:"เขียนคลาส MyStack เองด้วย array (push, pop, peek, isEmpty) ถ้าเต็มหรือว่างให้โยน exception แล้วใช้ตรวจว่าวงเล็บ ( ) [ ] { } ในสตริงปิดครบและถูกคู่หรือไม่",io:"(a[b]) → Balanced\n(] → Not balanced",h:"เจอวงเล็บเปิดให้ push เจอวงเล็บปิดให้ pop มาเทียบว่าเป็นคู่กันหรือไม่ และตอนจบ stack ต้องว่าง"},
+ {t:"เรียงนักเรียนด้วย Comparable",d:"ให้ Student implements Comparable<Student> เรียงตามค่าเฉลี่ยจากมากไปน้อย แล้วใช้ Collections.sort กับ ArrayList<Student> พิมพ์ชื่อตามลำดับ",io:"Ann 3.5, Bob 3.9, Cat 3.2\nผลลัพธ์: Bob, Ann, Cat",h:"compareTo คืนค่าลบ ศูนย์ หรือบวก ลองใช้ Double.compare และสลับลำดับของสองตัวเพื่อให้เรียงจากมากไปน้อย"}
+]}];
+
+var KEY="java-practice-set2-done", done={};
+try{ done=JSON.parse(localStorage.getItem(KEY)||"{}")||{}; }catch(e){ done={}; }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(e){} }
+
+var root=document.getElementById("root");
+function el(tag,cls,text){ var n=document.createElement(tag); if(cls)n.className=cls; if(text!==undefined)n.textContent=text; return n; }
+
+LEVELS.forEach(function(L,li){
+  var sec=el("section","level "+L.cls);
+  sec.appendChild(el("h2",null,L.title));
+  sec.appendChild(el("p",null,L.note));
+  L.items.forEach(function(it,ii){
+    var id=li+"-"+ii, card=el("article","card");
+    var top=el("div","top"), cb=document.createElement("input");
+    cb.type="checkbox"; cb.id="c"+id; cb.checked=!!done[id]; cb.setAttribute("aria-label","ทำข้อนี้เสร็จแล้ว");
+    var h=el("h3",null,(li+1)+"."+(ii+1)+" "+it.t);
+    top.appendChild(cb); top.appendChild(h); card.appendChild(top);
+    card.appendChild(el("p","desc",it.d));
+    card.appendChild(el("p","ex","ตัวอย่างสำหรับทดสอบ"));
+    card.appendChild(el("pre",null,it.io));
+    var dt=document.createElement("details"), sm=el("summary",null,"ดูคำใบ้");
+    dt.appendChild(sm); dt.appendChild(el("p",null,it.h)); card.appendChild(dt);
+    if(cb.checked)card.classList.add("done");
+    cb.addEventListener("change",function(){
+      if(cb.checked)done[id]=1; else delete done[id];
+      card.classList.toggle("done",cb.checked); save(); update();
+    });
+    sec.appendChild(card);
+  });
+  root.appendChild(sec);
+});
+
+function update(){
+  var n=Object.keys(done).length, total=15;
+  document.getElementById("ptext").textContent="ทำแล้ว "+n+" จาก "+total+" ข้อ";
+  document.getElementById("pbar").style.width=(n/total*100)+"%";
+}
+update();
+
+document.getElementById("theme").addEventListener("click",function(){
+  var r=document.documentElement, cur=r.getAttribute("data-theme");
+  if(!cur){ cur=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"; }
+  r.setAttribute("data-theme",cur==="dark"?"light":"dark");
+});
+</script>
+</body>
+</html>
